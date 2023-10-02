@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _maxHeath;
     [SerializeField] private int _ammunitionBullets;
     [SerializeField] public Transform _shootpoint;
-    //[SerializeField] private Bullet _bulletTemplate;
+    [SerializeField] private Bullet _bulletTemplate;
 
     public Vector2 MovementInput;
 
@@ -74,8 +74,21 @@ public class Player : MonoBehaviour
     {
         
         Debug.Log("Fire");
-        //Fire();
-
+        Instantiate(_bulletTemplate, _shootpoint.position, transform.rotation);
         
+
+
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        _currentHeath -= damage;
+        HealthChanged?.Invoke(_currentHeath, _maxHeath);
+
+        if (_currentHeath <= 0)
+        {
+            Debug.Log("Die");
+            //Destroy(gameObject);
+        }
     }
 }
