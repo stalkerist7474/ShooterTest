@@ -72,10 +72,15 @@ public class Player : MonoBehaviour
 
     private void OnFire()
     {
-        
-        Debug.Log("Fire");
-        Instantiate(_bulletTemplate, _shootpoint.position, transform.rotation);
-        
+        if (_ammunitionBullets >  0)
+        {
+
+            Debug.Log("Fire");
+            Instantiate(_bulletTemplate, _shootpoint.position, transform.rotation);
+            _ammunitionBullets--;
+        }
+
+
 
 
     }
@@ -90,5 +95,18 @@ public class Player : MonoBehaviour
             Debug.Log("Die");
             //Destroy(gameObject);
         }
+    }
+
+    //ןמהבמנ ןנוהלועמג
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Item item))
+        {
+
+            Inventory.inventory.AddItemToInventory(item);
+
+            Destroy(collision.gameObject);
+        }
+
     }
 }

@@ -6,13 +6,13 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _heath;
-    [SerializeField] private int _rewardGold;
-    [SerializeField] private int _rewardExp;
-
+    [SerializeField] private List<Item> _dropItemList = new List<Item>();
     [SerializeField] private Player _target;
 
-    public int RewardGold => _rewardGold;
-    public int RewardExp => _rewardExp;
+    private Transform _lastEnemyTransform;
+    private Item _item;
+
+
     public Player Target => _target;
 
     public event UnityAction<Enemy> Dying;
@@ -31,11 +31,20 @@ public class Enemy : MonoBehaviour
         if (_heath <= 0)
         {
             Dying?.Invoke(this);
+            _lastEnemyTransform = transform; //позиция где умер моб
+            _item = _dropItemList[UnityEngine.Random.Range(0, _dropItemList.Count)]; //выбираем из списка что из него выпадет 
+
+
             Destroy(gameObject);
-            //GetListEnemys().Remove(null);
+            DropItem();
+            
         }
     }
 
+    private void DropItem()
+    {
+        Instantiate(_item, _lastEnemyTransform.position, transform.rotation);
+    }
 
     
 }
