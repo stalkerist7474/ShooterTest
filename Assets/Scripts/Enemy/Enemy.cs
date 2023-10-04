@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
         
 
         _currentHeath = _heath;
+        HealthChanged?.Invoke(_currentHeath, _heath);
 
     }
     public void TakeDamage(int damage)
