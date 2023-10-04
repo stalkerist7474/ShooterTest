@@ -6,12 +6,14 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _heath;
+    [SerializeField] private int _currentHeath;
     [SerializeField] private List<Item> _dropItemList = new List<Item>();
     [SerializeField] private Player _target;
 
     private Transform _lastEnemyTransform;
     private Item _item;
 
+    public event UnityAction<int, int> HealthChanged;
 
     public Player Target => _target;
 
@@ -24,11 +26,19 @@ public class Enemy : MonoBehaviour
         _target = target;
     }
 
+    private void Start()
+    {
+        
+
+        _currentHeath = _heath;
+
+    }
     public void TakeDamage(int damage)
     {
-        _heath -= damage;
+        _currentHeath -= damage;
+        HealthChanged?.Invoke(_currentHeath, _heath);
 
-        if (_heath <= 0)
+        if (_currentHeath <= 0)
         {
             Dying?.Invoke(this);
             _lastEnemyTransform = transform; //позиция где умер моб

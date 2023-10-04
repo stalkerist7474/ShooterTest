@@ -98,9 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19e682c9a7eb8949895bba4df595f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Money
-  _icon: {fileID: 21300000, guid: be4007fc45c671344bc16a9956ce56a0, type: 3}
-  _maxInStack: 5
+  Id: 1
+  Name: Money
+  Icon: {fileID: 21300000, guid: be4007fc45c671344bc16a9956ce56a0, type: 3}
+  CountItem: 2
+  MaxInStack: 3
 --- !u!58 &7656971794863063515
 CircleCollider2D:
   m_ObjectHideFlags: 0

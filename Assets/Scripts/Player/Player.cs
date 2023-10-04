@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     
 
     public event UnityAction<int, int> HealthChanged;
-    public event UnityAction<int> MoneyChanged;
+    
 
     private void Start()
     {
@@ -64,18 +64,17 @@ public class Player : MonoBehaviour
         
 
         MovementInput = inputValue.Get<Vector2>();
-        Debug.Log("Move");
-        Debug.Log(MovementInput);
+        
         
 
     }
 
-    private void OnFire()
+    public void OnFire()
     {
         if (_ammunitionBullets >  0)
         {
 
-            Debug.Log("Fire");
+            
             Instantiate(_bulletTemplate, _shootpoint.position, transform.rotation);
             _ammunitionBullets--;
         }
@@ -93,7 +92,7 @@ public class Player : MonoBehaviour
         if (_currentHeath <= 0)
         {
             Debug.Log("Die");
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -104,7 +103,7 @@ public class Player : MonoBehaviour
         {
 
             Inventory.inventory.AddItemToInventory(item);
-
+            Debug.Log("delete item ");
             Destroy(collision.gameObject);
         }
 

@@ -98,9 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d19e682c9a7eb8949895bba4df595f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Wood
-  _icon: {fileID: 21300000, guid: 8e8bf045c21962248ba1b32f5765992f, type: 3}
-  _maxInStack: 2
+  Id: 3
+  Name: Wood
+  Icon: {fileID: 21300000, guid: 8e8bf045c21962248ba1b32f5765992f, type: 3}
+  CountItem: 3
+  MaxInStack: 4
 --- !u!58 &8634191211882773307
 CircleCollider2D:
   m_ObjectHideFlags: 0

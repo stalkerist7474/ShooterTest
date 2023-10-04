@@ -25,11 +25,11 @@ public class Spawner : MonoBehaviour
     private bool _waveAllEnemySpawned;
 
     public event UnityAction AllEnemySpawned;
-    public event UnityAction OnAllEnemyDieCurrentWave;
-    public event UnityAction OnAllWaveEnd;
+    //public event UnityAction OnAllEnemyDieCurrentWave;
+    //public event UnityAction OnAllWaveEnd;
 
     public static event UnityAction OnLevelWin;
-    public event UnityAction OnLevelGameOver;
+    //public event UnityAction OnLevelGameOver;
 
     public event UnityAction<int, int> EnemyCountChanged;
 
@@ -37,14 +37,14 @@ public class Spawner : MonoBehaviour
     private void OnEnable()
     {
         AllEnemySpawned += OnAllEnemySpawned;
-        //OnLevelWin += winLevel.OnWin;
+        
     }
 
 
     private void OnDisable()
     {
         AllEnemySpawned -= OnAllEnemySpawned;
-        //OnLevelWin += winLevel.OnWin;
+        
     }
 
 
@@ -52,7 +52,7 @@ public class Spawner : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _numWaveOnThisLevel = _waves.Count;
-        //Debug.Log($"_waves.Count{_waves.Count}");
+        
         SetWave(_currentWaveNumber);
         _waveComplete = false;
         _waveAllEnemySpawned = false;
@@ -63,21 +63,20 @@ public class Spawner : MonoBehaviour
         _timeAfterLastSpawn += Time.deltaTime;
         _timeAfterLastWaveDone += Time.deltaTime;
 
-       // Debug.Log($"_timeAfterLastWaveDone{_timeAfterLastWaveDone}");
-       // Debug.Log($"_waveAllEnemySpawned={_waveAllEnemySpawned}/ _waveComplete={_waveComplete}");
+       
 
         // Условие если все цели заспавнены и все они убиты
         if (_waveAllEnemySpawned == true)
         {
-           // Debug.Log("End wave1");
+           
             if (_waveComplete == true)
             {
-               // Debug.Log("End wave2");
+               
                             
                 if (_timeAfterLastWaveDone >= _timeNextWaveDelay)
                 {
                     NextWave();
-                   // Debug.Log("End wave3");
+                   
                 }
             }
 
@@ -146,9 +145,7 @@ public class Spawner : MonoBehaviour
     {
         enemy.Dying -= OnEnemyDying;
         _enemyCount--;
-       // _player.AddMoney(enemy.RewardGold);
-       // _player.AddExp(enemy.RewardExp);
-        //Debug.Log($"_enemyCount222={_enemyCount}");
+       
         if (_enemyCount == 0)
         {
             _timeAfterLastWaveDone = 0;
@@ -174,7 +171,7 @@ public class Spawner : MonoBehaviour
     {
         Debug.Log($"WINNER1");
         OnLevelWin?.Invoke();
-        Debug.Log($"WINNER2");
+        
     }
 
 

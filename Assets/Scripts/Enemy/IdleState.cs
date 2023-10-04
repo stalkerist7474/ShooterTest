@@ -6,7 +6,7 @@ public class IdleState : State
 {
     private void Update()
     {
-        Debug.Log("stand");
+        transform.position = transform.position;
     }
 }
 
