@@ -37,8 +37,7 @@ public class ItemInventaryView : MonoBehaviour
     private void Start()
     {
         ItemInventaryView inventory = GetComponent<ItemInventaryView>();
-        //inventory.CountItemTMP.text = CountItem.ToString();
-        //CountItemTMP.text = CountItem.ToString();
+        
     }
 
 
@@ -49,7 +48,7 @@ public class ItemInventaryView : MonoBehaviour
         Id = item.Id;
         Name.text = item.Name.ToString();
         CountItemTMP.text = item.CountItem.ToString();
-        if (CountItem == 1)
+        if (item.CountItem == 1)
             ShowCount = false;
         MaxInStack = item.MaxInStack;
         IconView.sprite = item.Icon;
@@ -58,7 +57,7 @@ public class ItemInventaryView : MonoBehaviour
 
     }
 
-    private void OnCountChanged(int count)
+    private void OnCountChanged(int count) //для скрытия и открытия числа в стаке
     {
         int num = int.Parse(CountItemTMP.text) + count;
         ShowCount = true;
