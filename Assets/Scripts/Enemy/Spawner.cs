@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
+    public static List<Enemy> _enemiesList = new List<Enemy>();
     
 
     [SerializeField] private List<Wave> _waves;
@@ -23,6 +24,9 @@ public class Spawner : MonoBehaviour
     private int _numWaveOnThisLevel;
     private bool _waveComplete;
     private bool _waveAllEnemySpawned;
+
+    public int CurrentWaveNumber { get => _currentWaveNumber; set => _currentWaveNumber = value; }
+
     public event UnityAction AllEnemySpawned;
     
 
@@ -30,7 +34,7 @@ public class Spawner : MonoBehaviour
     
 
     public event UnityAction<int, int> EnemyCountChanged;
-
+    
 
     private void OnEnable()
     {
@@ -54,7 +58,9 @@ public class Spawner : MonoBehaviour
         SetWave(_currentWaveNumber);
         _waveComplete = false;
         _waveAllEnemySpawned = false;
-    }
+        //_enemiesList = new List<Enemy>();
+
+}
 
     private void Update()
     {
@@ -92,6 +98,7 @@ public class Spawner : MonoBehaviour
             _enemyCount++;
             _timeAfterLastSpawn = 0;
             EnemyCountChanged?.Invoke(_spawned, _currentWave.Count);
+            //transform.position = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f));
         }
         
 
@@ -114,7 +121,12 @@ public class Spawner : MonoBehaviour
     // Спавн врагов
     private void InstantiateEnemy()
     {
-        Enemy enemy = Instantiate(_currentWave.Template, _spawnPoint.position, _spawnPoint.rotation, _spawnPoint).GetComponent<Enemy>();
+        var rand = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f));
+
+        Enemy enemy = Instantiate(_currentWave.Template, rand, _spawnPoint.rotation, _spawnPoint).GetComponent<Enemy>();
+        _enemiesList.Add(enemy);
+        
+
         enemy.Init(_player);
         enemy.Dying += OnEnemyDying;
     }
@@ -142,6 +154,7 @@ public class Spawner : MonoBehaviour
     private void OnEnemyDying(Enemy enemy)
     {
         enemy.Dying -= OnEnemyDying;
+        
         _enemyCount--;
        
         if (_enemyCount == 0)
@@ -172,7 +185,7 @@ public class Spawner : MonoBehaviour
         
     }
 
-
+    
 
 }
 

@@ -25,9 +25,9 @@ public class Player : MonoBehaviour
     private Vector2 _movementInputSmoothVelocity;
   
     private int _currentHeath;
-    
 
-    
+    public int CurrentHeath { get => _currentHeath; set => _currentHeath = value; }
+
 
     public event UnityAction<int, int> HealthChanged;
     
@@ -108,4 +108,7 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    
+    
 }

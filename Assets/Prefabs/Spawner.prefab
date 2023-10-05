@@ -47,8 +47,8 @@ MonoBehaviour:
   _waves:
   - Template: {fileID: 4168901722711985141, guid: 9b73dcb19002bc841bbc60702a3c9972,
       type: 3}
-    Delay: 0
-    Count: 1
+    Delay: 0.1
+    Count: 3
     DelayWave: 0
   _spawnPoint: {fileID: 5551194440118577857}
   _player: {fileID: 0}

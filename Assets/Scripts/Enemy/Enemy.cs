@@ -12,10 +12,13 @@ public class Enemy : MonoBehaviour
 
     private Transform _lastEnemyTransform;
     private Item _item;
-
+    private bool _isDie = false;
     public event UnityAction<int, int> HealthChanged;
 
     public Player Target => _target;
+
+    public int CurrentHeath { get => _currentHeath; set => _currentHeath = value; }
+    public bool IsDie { get => _isDie; set => _isDie = value; }
 
     public event UnityAction<Enemy> Dying;
 
@@ -44,9 +47,9 @@ public class Enemy : MonoBehaviour
             Dying?.Invoke(this);
             _lastEnemyTransform = transform; //позиция где умер моб
             _item = _dropItemList[UnityEngine.Random.Range(0, _dropItemList.Count)]; //выбираем из списка что из него выпадет 
-
-
-            Destroy(gameObject);
+            _isDie = true;
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
             DropItem();
             
         }
@@ -57,5 +60,20 @@ public class Enemy : MonoBehaviour
         Instantiate(_item, _lastEnemyTransform.position, transform.rotation);
     }
 
-    
+    public void LoadData(Save.EnemySaveData data)
+    {
+        if(data.IsDie == true)
+        {
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
+            return;
+        }
+        transform.position = new Vector3(data.Position.x, data.Position.y, data.Position.z);
+
+        _currentHeath = data.CurrentHeath;
+        HealthChanged?.Invoke(_currentHeath, _heath);
+
+
+
+    }
 }
