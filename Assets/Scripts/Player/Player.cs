@@ -109,6 +109,16 @@ public class Player : MonoBehaviour
 
     }
 
-    
-    
+    public void LoadData(Save.PlayerSaveData data)
+    {
+        
+        transform.position = new Vector3(data.Position.x, data.Position.y, data.Position.z);
+
+        _currentHeath = data.CurrentHeath;
+        HealthChanged?.Invoke(_currentHeath, _maxHeath);
+
+
+
+    }
+
 }

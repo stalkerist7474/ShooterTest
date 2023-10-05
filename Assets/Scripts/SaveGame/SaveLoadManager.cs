@@ -4,13 +4,15 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
+using System.ComponentModel;
 
 
 public class SaveLoadManager : MonoBehaviour
 {
     
     string filePath;
-    Player Player;
+    Player PlayerSave;
     public List<Enemy> EnemySaves = new List<Enemy>();
 
     private void Start()
@@ -22,9 +24,10 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         filePath = directory + "/save.gamesave";  //С:\Users\Remix74\AppData\LocalLow\DefaultCompany\ShooterTestsaves путь до файла у меня на компьютере
-        Player = GetComponent<Player>();
+        
 
         EnemySaves = Spawner._enemiesList;
+        PlayerSave = FindObjectOfType<Player>();
     }
 
 
@@ -36,6 +39,7 @@ public class SaveLoadManager : MonoBehaviour
 
         save.SaveEnemies(EnemySaves);
         
+        save.SavePlayer(PlayerSave);
 
         bf.Serialize(fs, save);
         fs.Close();
@@ -55,15 +59,22 @@ public class SaveLoadManager : MonoBehaviour
         fs.Close();
 
 
-
+        //Enemy
         int i = 0;
-
         foreach (var enemy in save.EnemiesData)
         {
             
             EnemySaves[i].GetComponent<Enemy>().LoadData(enemy);
             i++;
         }
+
+        //Player
+
+        foreach (var player in save.PlayerData)
+        {
+            PlayerSave.GetComponent<Player>().LoadData(player);
+        }
+          
         Debug.Log($"Load");
     }
 
@@ -75,7 +86,6 @@ public class Save
 {
 
     
-    //Монстры
     [Serializable]
     public struct vec3
     {
@@ -89,6 +99,7 @@ public class Save
         }
     }
 
+    //Монстры
 
     [Serializable]
     public struct EnemySaveData
@@ -109,7 +120,7 @@ public class Save
     }
 
     public List<EnemySaveData> EnemiesData = new List<EnemySaveData>();
-    public int CountEnemySaveData = new int();
+    //public int CountEnemySaveData = new int();
 
     public void SaveEnemies(List<Enemy> enemies)
     {
@@ -137,8 +148,46 @@ public class Save
 
 
     //Игрок
+    [Serializable]
+    public struct PlayerSaveData
+    {
+        public vec3 Position;
+        public int CurrentHeath;
 
 
+        public PlayerSaveData(vec3 pos, int heath)
+        {
+            Position = pos;
+            CurrentHeath = heath;
+
+        }
+
+    }
+
+    public List<PlayerSaveData> PlayerData = new List<PlayerSaveData>();
+
+
+
+    public void SavePlayer(Player player)
+    {
+
+
+        var go = player.GetComponent<Player>();
+
+        vec3 pos = new vec3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
+            
+        int hp = player.CurrentHeath;
+
+        PlayerData.Add(new PlayerSaveData(pos, hp));
+
+        
+
+
+    }
+
+
+
+}
 
     //Инвентарь
 
@@ -174,5 +223,4 @@ public class Save
 
 
 
-    
-}
+
