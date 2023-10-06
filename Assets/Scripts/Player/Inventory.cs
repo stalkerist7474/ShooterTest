@@ -32,15 +32,6 @@ public class Inventory : MonoBehaviour
 
         ItemInventary newItem = new ItemInventary(item.Id, item.Name, item.Icon, item.CountItem, item.MaxInStack);
 
-       
-
-        
-        Debug.Log($"ItemsCount{ItemsInventaryList.Count}");
-        
-
-
-
-
         if (ItemsInventaryList.Count == 0)
         {
             ItemsInventaryList.Add(newItem);
@@ -116,7 +107,7 @@ public class Inventory : MonoBehaviour
                     
                 newItemView.Render(newItem);
                 PlayerInventoryForCanvas.Add(newItemView);
-                Debug.Log("AddItem5");
+                
             }
 
 

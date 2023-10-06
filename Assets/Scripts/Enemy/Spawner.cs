@@ -27,13 +27,8 @@ public class Spawner : MonoBehaviour
     private bool _waveAllEnemySpawned;
 
     public int CurrentWaveNumber { get => _currentWaveNumber; set => _currentWaveNumber = value; }
-
     public event UnityAction AllEnemySpawned;
-    
-
     public static event UnityAction OnLevelWin;
-    
-
     public event UnityAction<int, int> EnemyCountChanged;
     
 
@@ -59,9 +54,9 @@ public class Spawner : MonoBehaviour
         SetWave(_currentWaveNumber);
         _waveComplete = false;
         _waveAllEnemySpawned = false;
-        //_enemiesList = new List<Enemy>();
 
-}
+
+    }
 
     private void Update()
     {
