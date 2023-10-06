@@ -6,6 +6,7 @@ using System.IO;
 using System;
 using static UnityEngine.EventSystems.EventTrigger;
 using System.ComponentModel;
+using static UnityEditor.Progress;
 
 
 public class SaveLoadManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class SaveLoadManager : MonoBehaviour
     public List<Item> DropSaves = new List<Item>();
     public List<ItemInventaryView> InventorySaves = new List<ItemInventaryView>();
     private bool dropSaved = true;
-    private bool InventorySaved = false;
+    private bool InventorySaved = true;
 
     private void Start()
     {
@@ -124,21 +125,14 @@ public class SaveLoadManager : MonoBehaviour
 
         if (dropSaved)
         {
-            Debug.Log($"Save{save.DropData.Count}");
-            Debug.Log($"Save{save.DropData[0].Id}");
             int y = 0;       
             foreach (var item in save.DropData)
             {
-                //int iden = item.Id;
-                //Vector3 vec = new Vector3(item.Position.x, item.Position.y, item.Position.z);
-                //DropSaves[y].GetComponent<Enemy>().LoadDataDrop(iden, vec);
+
                 Enemy Enemy = new Enemy();
                 Enemy.LoadDataDrop(item);
-
-                //DropSaves[y].GetComponent<Enemy>().LoadDataDrop(item);
                 y++;
-                Debug.Log($"Save{save.DropData.Count}");
-                Debug.Log($"Load1111");
+
                 
             }
         }
@@ -150,8 +144,12 @@ public class SaveLoadManager : MonoBehaviour
             int q = 0;
             foreach (var obj in save.InventoryData)
             {
+                Inventory inv = new Inventory();
+                inv.LoadData(obj);
 
-                InventorySaves[q].GetComponent<Inventory>().LoadData(obj);
+
+
+                //InventorySaves[q].GetComponent<Inventory>().LoadData(obj);
                 
                 q++;
                 Debug.Log($"Load2222");

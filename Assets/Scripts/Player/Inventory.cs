@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.VisualScripting;
-//using UnityEditorInternal.Profiling.Memory.Experimental;
+
 using UnityEngine;
 using UnityEngine.Events;
-//using static UnityEditor.Progress;
+
 
 public class Inventory : MonoBehaviour
 {
@@ -135,15 +134,20 @@ public class Inventory : MonoBehaviour
 
     public void LoadData(Save.InventorySaveData data)
     {
-        Debug.Log($"Lod");
-        Debug.Log($"Lodwadwa Id{data.Id},,, Loadwdawdwd{data.Count}");
-        for (int i = 0; i < ItemBaseData.Count; i++)
+
+
+        List<Item> items = FindAnyObjectByType<Inventory>().ItemBaseData;
+        Inventory inventory = FindAnyObjectByType<Inventory>();
+
+
+        for (int i = 0; i < items.Count; i++)
         {
-            if (ItemBaseData[i].Id == data.Id)
+            if (items[i].Id == data.Id)
             {
-                Debug.Log($"ρκστεσ");
-                Item item = new Item(ItemBaseData[i].Id, ItemBaseData[i].Name, ItemBaseData[i].Icon, ItemBaseData[i].CountItem, ItemBaseData[i].MaxInStack);
-                AddItemToInventory(item);
+
+                Item item = new Item(items[i].Id, items[i].Name, items[i].Icon, items[i].CountItem, items[i].MaxInStack);
+
+                inventory.AddItemToInventory(item);
             }
         }
 
