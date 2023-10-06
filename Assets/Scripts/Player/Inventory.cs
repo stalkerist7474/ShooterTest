@@ -141,6 +141,7 @@ public class Inventory : MonoBehaviour
         {
             if (ItemBaseData[i].Id == data.Id)
             {
+                Debug.Log($"ρκστεσ");
                 Item item = new Item(ItemBaseData[i].Id, ItemBaseData[i].Name, ItemBaseData[i].Icon, ItemBaseData[i].CountItem, ItemBaseData[i].MaxInStack);
                 AddItemToInventory(item);
             }

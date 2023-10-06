@@ -47,8 +47,22 @@ public class SaveLoadManager : MonoBehaviour
 
         foreach (var enemy in InventorySaves)
         {
-            Debug.Log($"InventorySavesCount {InventorySaves.Count}========InventorySaves 0 {enemy.Name}");
+            Debug.Log($"InventorySavesCount {InventorySaves.Count}========InventorySaves 0 {enemy.Name.text}");
         }
+        foreach (var enemy in EnemySaves)
+        {
+            Debug.Log($"InventorySavesCount {EnemySaves.Count}========InventorySaves 0 {enemy.name}");
+        }
+
+        if (DropSaves == null )
+        {
+            Debug.Log($"DropSaves NULL");
+        }
+        if (InventorySaves == null)
+        {
+            Debug.Log($"InventorySaves NULL");
+        }
+        
     }
 
     public void SaveGame()
@@ -123,7 +137,7 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //Inventory
-        if (!InventorySaved)
+        if (InventorySaved)
         {
 
             int q = 0;
