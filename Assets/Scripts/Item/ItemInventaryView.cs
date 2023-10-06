@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,8 @@ public class ItemInventaryView : MonoBehaviour
     public int CountItem;
 
     public bool ShowCount = true;
-    public ItemInventary itemInventary; //связь вью и списка с данными
 
+    public ItemInventary itemInventary; //связь вью и списка с данными
 
     private void OnEnable()
     {

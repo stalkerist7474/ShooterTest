@@ -11,18 +11,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] private List<Item> _dropItemList = new List<Item>();
     [SerializeField] private Player _target;
     
+
     private Transform _lastEnemyTransform;
     private Item _item;
     private bool _isDie = false;
     public event UnityAction<int, int> HealthChanged;
-    public event UnityAction<Enemy> Dying;
-
 
     public Player Target => _target;
+
     public int CurrentHeath { get => _currentHeath; set => _currentHeath = value; }
     public bool IsDie { get => _isDie; set => _isDie = value; }
 
-
+    public event UnityAction<Enemy> Dying;
 
 
     public void Init(Player target)
@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
         HealthChanged?.Invoke(_currentHeath, _heath);
 
     }
-
     public void TakeDamage(int damage)
     {
         _currentHeath -= damage;

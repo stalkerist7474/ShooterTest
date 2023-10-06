@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Enemy
   - Item
-  - Inventory
   layers:
   - Default
   - TransparentFX
