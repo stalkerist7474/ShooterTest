@@ -16,7 +16,7 @@ public class SaveLoadManager : MonoBehaviour
     public List<Enemy> EnemySaves = new List<Enemy>();
     public List<Item> DropSaves = new List<Item>();
     public List<ItemInventaryView> InventorySaves = new List<ItemInventaryView>();
-    private bool dropSaved = false;
+    private bool dropSaved = true;
     private bool InventorySaved = false;
 
     private void Start()
@@ -88,7 +88,8 @@ public class SaveLoadManager : MonoBehaviour
         bf.Serialize(fs, save);
         fs.Close();
         Debug.Log($"Save");
-        
+        Debug.Log($"Save{save.DropData.Count}");
+
     }
 
     public void LoadGame()
@@ -123,14 +124,20 @@ public class SaveLoadManager : MonoBehaviour
 
         if (dropSaved)
         {
-
+            Debug.Log($"Save{save.DropData.Count}");
+            Debug.Log($"Save{save.DropData[0].Id}");
             int y = 0;       
             foreach (var item in save.DropData)
             {
-                
+                //int iden = item.Id;
+                //Vector3 vec = new Vector3(item.Position.x, item.Position.y, item.Position.z);
+                //DropSaves[y].GetComponent<Enemy>().LoadDataDrop(iden, vec);
+                Enemy Enemy = new Enemy();
+                Enemy.LoadDataDrop(item);
 
-                DropSaves[y].GetComponent<Enemy>().LoadDataDrop(item);
+                //DropSaves[y].GetComponent<Enemy>().LoadDataDrop(item);
                 y++;
+                Debug.Log($"Save{save.DropData.Count}");
                 Debug.Log($"Load1111");
                 
             }
@@ -289,7 +296,7 @@ public class Save
     {
         foreach (var go in items)
         {
-            //var drop = go.GetComponent<Item>();
+
 
             vec3 pos = new vec3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
             
@@ -328,7 +335,7 @@ public class Save
     {
         foreach (var go in invItem)
         {
-            //ar item = go.GetComponent<ItemInventaryView>();
+            
 
             int id = go.Id;
             int c = go.CountItem;

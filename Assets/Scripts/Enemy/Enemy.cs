@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _currentHeath;
     [SerializeField] private List<Item> _dropItemList = new List<Item>();
     [SerializeField] private Player _target;
+    
 
     private Transform _lastEnemyTransform;
     private Item _item;
@@ -76,18 +78,13 @@ public class Enemy : MonoBehaviour
 
 
     }
-
+    
     public void LoadDataDrop(Save.DropSaveData data)
     {
+        List<Item> enemy = FindAnyObjectByType<Enemy>()._dropItemList;
 
 
-
-        var prefabItem = (Item)Resources.Load("prefabs/" + data.Id, typeof(Item));
-
-        Debug.Log("prefabs/" + data.Id);
-
-
-        Item i = Instantiate(prefabItem, new Vector3(data.Position.x, data.Position.y, data.Position.z), transform.rotation);
+        Item i = Instantiate(enemy[data.Id - 1], new Vector3(data.Position.x, data.Position.y, data.Position.z), Quaternion.identity);
         
         Spawner.DropOnGroundList.Add(i);
 
