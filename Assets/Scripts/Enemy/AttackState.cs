@@ -33,7 +33,7 @@ public class AttackState : State
 
     private void Attack(Player target)
     {
-        Debug.Log("Attack");
+        
         target.ApplyDamage(_damage);
         _animator.Play("Attack");
         

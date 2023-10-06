@@ -104,7 +104,9 @@ public class Player : MonoBehaviour
 
             Inventory.inventory.AddItemToInventory(item);
             Debug.Log("delete item ");
-            Destroy(collision.gameObject);
+            Spawner.DropOnGroundList.Remove(item);
+            collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
         }
 
     }

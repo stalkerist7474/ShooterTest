@@ -14,6 +14,10 @@ public class SaveLoadManager : MonoBehaviour
     string filePath;
     Player PlayerSave;
     public List<Enemy> EnemySaves = new List<Enemy>();
+    public List<Item> DropSaves = new List<Item>();
+    public List<ItemInventaryView> InventorySaves = new List<ItemInventaryView>();
+    private bool dropSaved = false;
+    private bool InventorySaved = false;
 
     private void Start()
     {
@@ -26,10 +30,26 @@ public class SaveLoadManager : MonoBehaviour
         filePath = directory + "/save.gamesave";  //С:\Users\Remix74\AppData\LocalLow\DefaultCompany\ShooterTestsaves путь до файла у меня на компьютере
         
 
-        EnemySaves = Spawner._enemiesList;
+        EnemySaves = Spawner.EnemiesList;
+        DropSaves = Spawner.DropOnGroundList;
+        InventorySaves = Inventory.PlayerInventoryForCanvas;
         PlayerSave = FindObjectOfType<Player>();
     }
 
+    
+
+    public void Print()
+    {
+        foreach (var enemy in DropSaves)
+        {
+            Debug.Log($"DropSavesCount {DropSaves.Count}=======DropSaves {enemy.Name}");
+        }
+
+        foreach (var enemy in InventorySaves)
+        {
+            Debug.Log($"InventorySavesCount {InventorySaves.Count}========InventorySaves 0 {enemy.Name}");
+        }
+    }
 
     public void SaveGame()
     {
@@ -40,6 +60,16 @@ public class SaveLoadManager : MonoBehaviour
         save.SaveEnemies(EnemySaves);
         
         save.SavePlayer(PlayerSave);
+
+        if(DropSaves.Count>0)
+            save.SaveDrop(DropSaves);
+            dropSaved = true;
+            Debug.Log($"DropSaves");
+
+        if (InventorySaves.Count > 0)
+            save.SaveInventory(InventorySaves);
+            InventorySaved = true;
+            Debug.Log($"InventorySaves");
 
         bf.Serialize(fs, save);
         fs.Close();
@@ -74,7 +104,43 @@ public class SaveLoadManager : MonoBehaviour
         {
             PlayerSave.GetComponent<Player>().LoadData(player);
         }
-          
+
+        //Drop
+
+        if (dropSaved)
+        {
+
+            int y = 0;       
+            foreach (var item in save.DropData)
+            {
+                
+
+                DropSaves[y].GetComponent<Enemy>().LoadDataDrop(item);
+                y++;
+                Debug.Log($"Load1111");
+                
+            }
+        }
+
+        //Inventory
+        if (!InventorySaved)
+        {
+
+            int q = 0;
+            foreach (var obj in save.InventoryData)
+            {
+
+                InventorySaves[q].GetComponent<Inventory>().LoadData(obj);
+                
+                q++;
+                Debug.Log($"Load2222");
+            }
+
+            
+
+
+        }
+
         Debug.Log($"Load");
     }
 
@@ -120,7 +186,7 @@ public class Save
     }
 
     public List<EnemySaveData> EnemiesData = new List<EnemySaveData>();
-    //public int CountEnemySaveData = new int();
+    
 
     public void SaveEnemies(List<Enemy> enemies)
     {
@@ -185,11 +251,84 @@ public class Save
 
     }
 
+    //Дроп
 
+    [Serializable]
+    public struct DropSaveData
+    {
+        public vec3 Position;
+        public int Id;
+        
+
+        public DropSaveData(vec3 pos, int id)
+        {
+            Position = pos;
+            Id = id;
+            
+        }
+    }
+
+    public List<DropSaveData> DropData = new List<DropSaveData>();
+    
+
+    public void SaveDrop(List<Item> items)
+    {
+        foreach (var go in items)
+        {
+            //var drop = go.GetComponent<Item>();
+
+            vec3 pos = new vec3(go.transform.position.x, go.transform.position.y, go.transform.position.z);
+            
+            int id = go.Id;
+
+            DropData.Add(new DropSaveData(pos, id));
+
+
+        }
+
+
+    }
+
+
+
+    [Serializable]
+    //инвентарь
+    public struct InventorySaveData
+    {
+        public int Id;
+        public int Count;
+        
+
+        public InventorySaveData(int id, int count)
+        {
+            Count = count;
+            Id = id;
+
+        }
+    }
+
+    public List<InventorySaveData> InventoryData = new List<InventorySaveData>();
+
+
+    public void SaveInventory(List<ItemInventaryView> invItem)
+    {
+        foreach (var go in invItem)
+        {
+            //ar item = go.GetComponent<ItemInventaryView>();
+
+            int id = go.Id;
+            int c = go.CountItem;
+
+
+            InventoryData.Add(new InventorySaveData(id,c));
+
+
+        }
+
+
+    }
 
 }
-
-    //Инвентарь
 
 
 

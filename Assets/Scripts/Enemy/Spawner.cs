@@ -7,8 +7,9 @@ using UnityEngine.Events;
 public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
-    public static List<Enemy> _enemiesList = new List<Enemy>();
-    
+    public static List<Enemy> EnemiesList = new List<Enemy>();
+    public static List<Item> DropOnGroundList = new List<Item>();
+
 
     [SerializeField] private List<Wave> _waves;
     [SerializeField] private Transform _spawnPoint;
@@ -124,7 +125,7 @@ public class Spawner : MonoBehaviour
         var rand = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f));
 
         Enemy enemy = Instantiate(_currentWave.Template, rand, _spawnPoint.rotation, _spawnPoint).GetComponent<Enemy>();
-        _enemiesList.Add(enemy);
+        EnemiesList.Add(enemy);
         
 
         enemy.Init(_player);

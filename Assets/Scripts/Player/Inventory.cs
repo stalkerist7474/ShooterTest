@@ -10,12 +10,14 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory inventory;
         
-    [SerializeField] private List<ItemInventaryView> _playerInventoryForCanvas = new List<ItemInventaryView>(); //список вьюшек
+    [SerializeField] public static List<ItemInventaryView> PlayerInventoryForCanvas = new List<ItemInventaryView>(); //список вьюшек
     [SerializeField] private ItemInventaryView _inventorySlotTemplate;
 
     
     [SerializeField] public List<ItemInventary> ItemsInventaryList = new List<ItemInventary>(); //объекты с данными о предметах
     [SerializeField] private GameObject _container;
+
+    [SerializeField] public List<Item> ItemBaseData = new List<Item>();
 
 
     public event UnityAction< int> CountChanged; //номер позиции в списке и количество
@@ -46,7 +48,7 @@ public class Inventory : MonoBehaviour
 
             ItemInventaryView newItemView = Instantiate(_inventorySlotTemplate, _container.transform);
             newItemView.Render(newItem);
-            _playerInventoryForCanvas.Add(newItemView);
+            PlayerInventoryForCanvas.Add(newItemView);
 
             return;
         }
@@ -79,7 +81,7 @@ public class Inventory : MonoBehaviour
                         ItemsInventaryList.Add(newItem); //добавляем если такого предмета еще нет в инвентаре
                         ItemInventaryView newItemView = Instantiate(_inventorySlotTemplate, _container.transform);
                         newItemView.Render(newItem);
-                        _playerInventoryForCanvas.Add(newItemView);
+                        PlayerInventoryForCanvas.Add(newItemView);
 
                         return;
                     }
@@ -96,7 +98,7 @@ public class Inventory : MonoBehaviour
                         ItemsInventaryList.Add(newItem);
                         ItemInventaryView newItemView = Instantiate(_inventorySlotTemplate, _container.transform);
                         newItemView.Render(newItem);
-                        _playerInventoryForCanvas.Add(newItemView);
+                        PlayerInventoryForCanvas.Add(newItemView);
                         return;
 
                     }
@@ -114,7 +116,7 @@ public class Inventory : MonoBehaviour
                 ItemInventaryView newItemView = Instantiate(_inventorySlotTemplate, _container.transform);
                     
                 newItemView.Render(newItem);
-                _playerInventoryForCanvas.Add(newItemView);
+                PlayerInventoryForCanvas.Add(newItemView);
                 Debug.Log("AddItem5");
             }
 
@@ -129,7 +131,24 @@ public class Inventory : MonoBehaviour
 
     }
 
-    
+
+
+    public void LoadData(Save.InventorySaveData data)
+    {
+        Debug.Log($"Lod");
+        Debug.Log($"Lodwadwa Id{data.Id},,, Loadwdawdwd{data.Count}");
+        for (int i = 0; i < ItemBaseData.Count; i++)
+        {
+            if (ItemBaseData[i].Id == data.Id)
+            {
+                Item item = new Item(ItemBaseData[i].Id, ItemBaseData[i].Name, ItemBaseData[i].Icon, ItemBaseData[i].CountItem, ItemBaseData[i].MaxInStack);
+                AddItemToInventory(item);
+            }
+        }
+
+
+
+    }
 }
 
 

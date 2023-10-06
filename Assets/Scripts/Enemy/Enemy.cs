@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     public event UnityAction<Enemy> Dying;
 
 
-
     public void Init(Player target)
     {
         _target = target;
@@ -57,7 +56,8 @@ public class Enemy : MonoBehaviour
 
     private void DropItem()
     {
-        Instantiate(_item, _lastEnemyTransform.position, transform.rotation);
+        Item i = Instantiate(_item, _lastEnemyTransform.position, transform.rotation);
+        Spawner.DropOnGroundList.Add(i);
     }
 
     public void LoadData(Save.EnemySaveData data)
@@ -76,4 +76,27 @@ public class Enemy : MonoBehaviour
 
 
     }
+
+    public void LoadDataDrop(Save.DropSaveData data)
+    {
+
+
+
+        var prefabItem = (Item)Resources.Load("prefabs/" + data.Id, typeof(Item));
+
+        Debug.Log("prefabs/" + data.Id);
+
+
+        Item i = Instantiate(prefabItem, new Vector3(data.Position.x, data.Position.y, data.Position.z), transform.rotation);
+        
+        Spawner.DropOnGroundList.Add(i);
+
+
+
+    }
+
+
+
+
+
 }

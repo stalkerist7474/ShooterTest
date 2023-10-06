@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-//using static UnityEditor.Experimental.GraphView.GraphView;
-//using static UnityEditor.Progress;
+
 
 public class ItemInventaryView : MonoBehaviour
 {
@@ -48,6 +48,7 @@ public class ItemInventaryView : MonoBehaviour
         Id = item.Id;
         Name.text = item.Name.ToString();
         CountItemTMP.text = item.CountItem.ToString();
+        CountItem = item.CountItem;
         if (item.CountItem == 1)
             ShowCount = false;
         MaxInStack = item.MaxInStack;
@@ -63,7 +64,7 @@ public class ItemInventaryView : MonoBehaviour
         ShowCount = true;
 
         CountItemTMP.text = num.ToString();
-
+        CountItem = num;
         CheckShowCount();
     }
 
