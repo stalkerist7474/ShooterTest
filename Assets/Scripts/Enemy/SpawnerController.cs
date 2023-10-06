@@ -26,11 +26,8 @@ public class SpawnerController : MonoBehaviour
                 
                 Vector2 pos = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f));
                 Instantiate(SpawnerPrefab, pos, Quaternion.identity);
-                
-                
 
             }
-
-        
+       
     }
 }

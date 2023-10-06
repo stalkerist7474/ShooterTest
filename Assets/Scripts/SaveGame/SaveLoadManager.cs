@@ -4,9 +4,7 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
-using static UnityEngine.EventSystems.EventTrigger;
-using System.ComponentModel;
-using static UnityEditor.Progress;
+
 
 
 public class SaveLoadManager : MonoBehaviour
@@ -37,35 +35,6 @@ public class SaveLoadManager : MonoBehaviour
         PlayerSave = FindObjectOfType<Player>();
     }
 
-    
-
-    public void Print()
-    {
-        foreach (var enemy in DropSaves)
-        {
-            Debug.Log($"DropSavesCount {DropSaves.Count}=======DropSaves {enemy.Name}");
-        }
-
-        foreach (var enemy in InventorySaves)
-        {
-            Debug.Log($"InventorySavesCount {InventorySaves.Count}========InventorySaves 0 {enemy.Name.text}");
-        }
-        foreach (var enemy in EnemySaves)
-        {
-            Debug.Log($"InventorySavesCount {EnemySaves.Count}========InventorySaves 0 {enemy.name}");
-        }
-
-        if (DropSaves == null )
-        {
-            Debug.Log($"DropSaves NULL");
-        }
-        if (InventorySaves == null)
-        {
-            Debug.Log($"InventorySaves NULL");
-        }
-        
-    }
-
     public void SaveGame()
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -79,17 +48,16 @@ public class SaveLoadManager : MonoBehaviour
         if(DropSaves.Count>0)
             save.SaveDrop(DropSaves);
             dropSaved = true;
-            Debug.Log($"DropSaves");
+
 
         if (InventorySaves.Count > 0)
             save.SaveInventory(InventorySaves);
             InventorySaved = true;
-            Debug.Log($"InventorySaves");
+
 
         bf.Serialize(fs, save);
         fs.Close();
-        Debug.Log($"Save");
-        Debug.Log($"Save{save.DropData.Count}");
+
 
     }
 
@@ -152,7 +120,7 @@ public class SaveLoadManager : MonoBehaviour
                 //InventorySaves[q].GetComponent<Inventory>().LoadData(obj);
                 
                 q++;
-                Debug.Log($"Load2222");
+
             }
 
             
@@ -160,7 +128,7 @@ public class SaveLoadManager : MonoBehaviour
 
         }
 
-        Debug.Log($"Load");
+
     }
 
     
@@ -220,7 +188,7 @@ public class Save
             int hp = enemy.CurrentHeath;
             bool isdie = enemy.IsDie;
 
-            Debug.Log($"hp{hp} enemy.CurrentHeath{enemy.CurrentHeath} isdie{isdie}");
+
 
             EnemiesData.Add(new EnemySaveData(pos, hp, isdie));
             
